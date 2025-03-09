@@ -10,12 +10,14 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+    permissions:
+      contents: write
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
     
@@ -34,31 +36,20 @@ jobs:
         chmod +x create_dmg.sh
         ./create_dmg.sh
     
-    - name: Upload DMG
-      uses: actions/upload-artifact@v2
+    - name: Upload DMG as Artifact
+      uses: actions/upload-artifact@v4
       with:
         name: SRT_Translator-macOS
         path: SRT_Translator-1.0.dmg
         
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        files: SRT_Translator-1.0.dmg
         tag_name: v${{ github.run_number }}
-        release_name: Release v${{ github.run_number }}
+        name: Release v${{ github.run_number }}
         draft: false
         prerelease: false
-    
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./SRT_Translator-1.0.dmg
-        asset_name: SRT_Translator-1.0.dmg
-        asset_content_type: application/x-apple-diskimage
+        token: ${{ secrets.GITHUB_TOKEN }}
