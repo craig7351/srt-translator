@@ -1,4 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
+from os.path import exists
 
 block_cipher = None
 
@@ -39,7 +40,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='icon.ico' if exists('icon.ico') else None,
 )
 
 coll = COLLECT(
