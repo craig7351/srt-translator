@@ -29,8 +29,11 @@
 /Applications/SRT\ Translator.app/Contents/MacOS/srt_translator input.srt
 
 # 翻譯整個資料夾中的所有 .srt 檔案
-/Applications/SRT\ Translator.app/Contents/MacOS/srt_translator -f ./字幕資料夾
+/Applications/SRT\ Translator.app/Contents/MacOS/srt_translator ./字幕資料夾
 ```
+
+#### 拖曳檔案或資料夾
+您也可以直接將 SRT 檔案或包含 SRT 檔案的資料夾拖曳到 `SRT Translator` 的執行檔上，程式將自動開始翻譯。
 
 ## Windows 用戶使用方法
 
@@ -49,24 +52,23 @@
 6. 執行可執行文件，使用以下命令格式：
 
    ```bash
-   SRT_Translator-1.0.exe <input_file.srt> <output_file.srt>
+   SRT_Translator-1.0.exe <input_file.srt>
    ```
 
-   - `<input_file.srt>`: 要翻譯的輸入 SRT 檔案。
-   - `<output_file.srt>`: 翻譯後生成的輸出 SRT 檔案。
+   - `<input_file.srt>`: 要翻譯的輸入 SRT 檔案。   
 
 ### 翻譯整個資料夾
 
-如果您想要翻譯整個資料夾中的所有 SRT 檔案，可以使用 `-f` 參數。以下是具體步驟：
+如果您想要翻譯整個資料夾中的所有 SRT 檔案，可以使用以下命令格式：
 
-1. 確保您的資料夾中只包含需要翻譯的 `.srt` 檔案。
-2. 使用以下命令格式執行：
+```bash
+SRT_Translator-1.0.exe <folder_path>
+```
 
-   ```bash
-   SRT_Translator-1.0.exe -f <folder_path>
-   ```
+- `<folder_path>`: 包含要翻譯的 SRT 檔案的資料夾路徑。
 
-   - `<folder_path>`: 包含要翻譯的 SRT 檔案的資料夾路徑。
+#### 拖曳檔案或資料夾
+您也可以直接將 SRT 檔案或包含 SRT 檔案的資料夾拖曳到 `SRT_Translator-1.0.exe` 的執行檔上，程式將自動開始翻譯。
 
 ### 翻譯完成後的檔案位置
 
@@ -76,10 +78,10 @@
 
 ```bash
 # 翻譯單個檔案
-SRT_Translator-1.0.exe example.srt translated_example.srt
+SRT_Translator-1.0.exe example.srt
 
 # 翻譯整個資料夾
-SRT_Translator-1.0.exe -f C:\path\to\your\subtitles_folder
+SRT_Translator-1.0.exe C:\path\to\your\subtitles_folder
 ```
 
 ## Python 用戶使用方法
@@ -102,7 +104,7 @@ pip install -r requirements.txt
 python main.py input.srt
 
 # 翻譯整個資料夾
-python main.py -f ./字幕資料夾
+python main.py ./字幕資料夾
 ```
 
 ## 功能特點
@@ -129,6 +131,10 @@ A: 這是 macOS 的安全機制，需要在「系統偏好設定」→「安全�
 
 Q: 翻譯速度似乎很慢？  
 A: 為了避免被翻譯服務封鎖，程式設有間隔時間限制。建議使用 Google 翻譯服務，相對較快且穩定。
+
+## Issue Reporting
+
+If you encounter any issues, please report them on the [Issues](https://github.com/craig7351/srt-translator/issues) page. 
 
 # English
 
@@ -157,6 +163,9 @@ Open Terminal and run:
 /Applications/SRT\ Translator.app/Contents/MacOS/srt_translator -f ./subtitles_folder
 ```
 
+#### Drag and Drop Files or Folders
+You can also drag and drop SRT files or folders containing SRT files onto the `SRT Translator` executable, and the program will automatically start translating.
+
 ## Windows User Guide
 
 ### Usage
@@ -174,24 +183,23 @@ Open Terminal and run:
 6. Run the executable using the following command format:
 
    ```bash
-   SRT_Translator-1.0.exe <input_file.srt> <output_file.srt>
+   SRT_Translator-1.0.exe <input_file.srt>
    ```
 
-   - `<input_file.srt>`: The input SRT file to be translated.
-   - `<output_file.srt>`: The output SRT file generated after translation.
+   - `<input_file.srt>`: The input SRT file to be translated.   
 
 ### Translating an Entire Folder
 
-If you want to translate all SRT files in a folder, you can use the `-f` parameter. Here are the steps:
+If you want to translate all SRT files in a folder, you can use the following command format:
 
-1. Ensure that your folder contains only the `.srt` files you want to translate.
-2. Run the following command format:
+```bash
+SRT_Translator-1.0.exe <folder_path>
+```
 
-   ```bash
-   SRT_Translator-1.0.exe -f <folder_path>
-   ```
+- `<folder_path>`: The path to the folder containing the SRT files.
 
-   - `<folder_path>`: The path to the folder containing the SRT files.
+#### Drag and Drop Files or Folders
+You can also drag and drop SRT files or folders containing SRT files onto the `SRT_Translator-1.0.exe` executable, and the program will automatically start translating.
 
 ### Output Location
 
@@ -201,10 +209,10 @@ After the translation is complete, all generated SRT files will be automatically
 
 ```bash
 # Translate a single file
-SRT_Translator-1.0.exe example.srt translated_example.srt
+SRT_Translator-1.0.exe example.srt
 
 # Translate an entire folder
-SRT_Translator-1.0.exe -f C:\path\to\your\subtitles_folder
+SRT_Translator-1.0.exe C:\path\to\your\subtitles_folder
 ```
 
 ## Python User Guide
@@ -227,7 +235,7 @@ pip install -r requirements.txt
 python main.py input.srt
 
 # Translate a directory
-python main.py -f ./subtitles_folder
+python main.py ./subtitles_folder
 ```
 
 ## Features

@@ -4,14 +4,12 @@ from deep_translator import (
     GoogleTranslator
 )
 from tqdm import tqdm
-import argparse
 import os
 import time
 import glob
 import json
 import random
-import requests
-
+import sys
 
 class TranslatorService:
     def __init__(self, source='en-US', target='zh-TW'):
@@ -172,26 +170,25 @@ def process_directory(input_dir, service_name):
         translate_subtitle(srt_file, output_file, service_name)
 
 def main():
-    parser = argparse.ArgumentParser(description='將英文SRT字幕翻譯成中文')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('input', nargs='?', help='輸入的SRT文件路徑')
-    group.add_argument('-f', '--folder', help='包含SRT文件的目錄路徑')
-    parser.add_argument('-o', '--output', help='輸出的SRT文件路徑（可選，僅在處理單個文件時有效）')
-    
-    args = parser.parse_args()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <input_file.srt> or <folder_path>")
+        sys.exit(1)
+
+    input_path = sys.argv[1]
     
     # 選擇翻譯服務
     service_name = select_translator()
     
-    if args.folder:
+    if os.path.isdir(input_path):
         # 處理整個目錄
-        process_directory(args.folder, service_name)
-    else:
+        process_directory(input_path, service_name)
+    elif os.path.isfile(input_path) and input_path.endswith('.srt'):
         # 處理單個文件
-        if not args.output:
-            file_name, file_ext = os.path.splitext(args.input)
-            args.output = f"{file_name}_zh{file_ext}"
-        translate_subtitle(args.input, args.output, service_name)
+        output_file = os.path.join("result", os.path.basename(input_path))
+        translate_subtitle(input_path, output_file, service_name)
+    else:
+        print("無效的輸入，請提供有效的SRT文件或目錄路徑。")
+        sys.exit(1)
 
 if __name__ == '__main__':
     main() 
