@@ -52,8 +52,8 @@ jobs:
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
         files: SRT_Translator-1.0.dmg
-        tag_name: v${{ env.VERSION }}
-        name: Release v${{ env.VERSION }}
+        tag_name: v${{ github.sha }}
+        name: Release ${{ github.sha }}
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
