@@ -33,13 +33,13 @@ jobs:
     
     - name: Rename Executable
       run: |
-        mv dist/main.exe dist/SRT_Translator-1.0.exe  # 重命名可执行文件
+        mv dist/main.exe dist/main-1.0.exe  # 重命名可执行文件
 
     - name: Upload Executable as Artifact
       uses: actions/upload-artifact@v4
       with:
         name: SRT_Translator-Windows
-        path: dist/SRT_Translator-1.0.exe  # 使用新的文件名
+        path: dist/main-1.0.exe  # 使用新的文件名
 
     - name: Print GitHub Context Variables
       run: |
@@ -68,7 +68,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
-        files: dist/SRT_Translator-1.0.exe  # 上传重命名后的可执行文件
+        files: dist/main-1.0.exe  # 上传重命名后的可执行文件
         tag_name: v${{ steps.get_version.outputs.version }}  # 使用从 .env 文件读取的版本号
         name: Release ${{ steps.get_version.outputs.version }}  # 使用版本号作为发布名称
         draft: false
