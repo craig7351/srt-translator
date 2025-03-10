@@ -57,14 +57,12 @@ jobs:
         echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
         echo "GITHUB_ENV: $GITHUB_ENV"
     
-    - name: Print Environment Variables
+    - name: Get Version from .env
+      id: get_version
       run: |
-        echo "Environment Variables in $GITHUB_ENV:"
-        cat $GITHUB_ENV  # 打印 $GITHUB_ENV 的内容
-
-    - name: Load Environment Variables
-      run: |
-        echo "VERSION=$(cat .env | grep VERSION | cut -d '=' -f2)" >> $GITHUB_ENV
+        VERSION=$(cat .env | grep VERSION | cut -d '=' -f2)
+        echo "VERSION=${VERSION}"  # 打印版本号
+        echo "::set-output name=version::${VERSION}"  # 设置输出变量
 
     - name: Create Release
       id: create_release
@@ -72,8 +70,8 @@ jobs:
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
         files: SRT_Translator-1.0.dmg
-        tag_name: v${{ github.sha }}
-        name: Release ${{ github.sha }}
+        tag_name: v${{ steps.get_version.outputs.version }}  # 使用从 .env 文件读取的版本号
+        name: Release ${{ steps.get_version.outputs.version }}
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
