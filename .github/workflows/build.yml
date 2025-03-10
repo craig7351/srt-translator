@@ -36,3 +36,15 @@ jobs:
       with:
         name: SRT_Translator-Windows
         path: dist/main.exe  # 根據生成的可執行檔案名稱調整
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      with:
+        files: dist/main.exe  # 上傳 Windows 可執行檔案
+        tag_name: v${{ github.run_number }}
+        name: Release v${{ github.run_number }}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
