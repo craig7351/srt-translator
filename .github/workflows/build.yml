@@ -37,14 +37,18 @@ jobs:
         name: SRT_Translator-Windows
         path: dist/main.exe  # 根據生成的可執行檔案名稱調整
 
+    - name: Load Environment Variables
+      run: |
+        echo "VERSION=$(cat .env | grep VERSION | cut -d '=' -f2)" >> $GITHUB_ENV
+
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
         files: dist/main.exe  # 上傳 Windows 可執行檔案
-        tag_name: v${{ github.run_number }}
-        name: Release v${{ github.run_number }}
+        tag_name: v${{ env.VERSION }}  # 使用从 .env 文件读取的版本号
+        name: Release v${{ env.VERSION }}  # 使用从 .env 文件读取的版本号
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
