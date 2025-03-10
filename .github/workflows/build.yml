@@ -41,9 +41,27 @@ jobs:
         name: SRT_Translator-Windows
         path: dist/SRT_Translator-1.0.exe  # 使用新的文件名
 
-    - name: Load Environment Variables
+    - name: Print GitHub Context Variables
       run: |
-        echo "VERSION=$(cat .env | grep VERSION | cut -d '=' -f2)" >> $GITHUB_ENV
+        echo "GitHub Context Variables:"
+        echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+        echo "GITHUB_RUN_ID: $GITHUB_RUN_ID"
+        echo "GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER"
+        echo "GITHUB_SHA: $GITHUB_SHA"
+        echo "GITHUB_REF: $GITHUB_REF"
+        echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+        echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
+        echo "GITHUB_ACTOR: $GITHUB_ACTOR"
+        echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        echo "GITHUB_ENV: $GITHUB_ENV"
+
+    - name: Get Version from .env
+      id: get_version
+      run: |
+        $VERSION = Get-Content .env | Select-String "VERSION" | ForEach-Object { $_.ToString().Split('=')[1].Trim() }
+        echo "VERSION=${VERSION}"  # 打印版本号
+        echo "::set-output name=version::${VERSION}"  # 设置输出变量
 
     - name: Create Release
       id: create_release
@@ -51,8 +69,8 @@ jobs:
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
         files: dist/SRT_Translator-1.0.exe  # 上传重命名后的可执行文件
-        tag_name: v${{ github.sha }}  # 使用从 .env 文件读取的版本号
-        name: Release ${{ github.sha }}  # 使用 SHA 作为发布名称
+        tag_name: v${{ steps.get_version.outputs.version }}  # 使用从 .env 文件读取的版本号
+        name: Release ${{ steps.get_version.outputs.version }}  # 使用版本号作为发布名称
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
