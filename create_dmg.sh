@@ -11,7 +11,7 @@ rm -rf "$TMP_DIR"
 mkdir "$TMP_DIR"
 
 # 複製應用程式到臨時目錄
-cp -r dist/srt_translator "$TMP_DIR/$APP_NAME.app"
+cp -r dist/"$APP_NAME.app" "$TMP_DIR/"
 
 # 創建 Applications 軟連結
 ln -s /Applications "$TMP_DIR/Applications"
