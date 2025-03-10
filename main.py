@@ -1,10 +1,7 @@
 import pysrt
 from deep_translator import (
     MyMemoryTranslator,
-    GoogleTranslator,
-    LingueeTranslator,
-    PonsTranslator,
-    QcriTranslator
+    GoogleTranslator
 )
 from tqdm import tqdm
 import argparse
@@ -14,36 +11,7 @@ import glob
 import json
 import random
 import requests
-from dotenv import load_dotenv
 
-# 載入 .env 文件
-load_dotenv()
-
-class DeepSeekTranslator:
-    def __init__(self, api_key):
-        self.api_key = api_key
-        self.api_url = "https://api.deepseek.com/v1/chat/completions"
-        self.headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
-
-    def translate(self, text):
-        payload = {
-            "model": "deepseek-chat",
-            "messages": [
-                {"role": "system", "content": "你是一個專業的翻譯助手。請將英文翻譯成繁體中文，保持原意的同時使翻譯更加通順自然。只需要返回翻譯結果，不需要任何解釋。"},
-                {"role": "user", "content": f"請翻譯：{text}"}
-            ],
-            "temperature": 0.3
-        }
-        
-        response = requests.post(self.api_url, headers=self.headers, json=payload)
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content'].strip()
-        else:
-            raise Exception(f"API錯誤: {response.status_code} - {response.text}")
 
 class TranslatorService:
     def __init__(self, source='en-US', target='zh-TW'):
@@ -57,12 +25,6 @@ class TranslatorService:
             return MyMemoryTranslator(source=self.source, target=self.target)
         elif service_name == "google":
             return GoogleTranslator(source='en', target='zh-TW')
-        elif service_name == "linguee":
-            return LingueeTranslator(source='english', target='chinese')
-        elif service_name == "pons":
-            return PonsTranslator(source='en', target='zh')
-        elif service_name == "qcri":
-            return QcriTranslator(source='en', target='zh')
         else:
             raise ValueError(f"不支持的翻譯服務: {service_name}")
             
