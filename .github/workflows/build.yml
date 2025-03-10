@@ -31,11 +31,15 @@ jobs:
       run: |
         pyinstaller --onefile main.py
     
+    - name: Rename Executable
+      run: |
+        mv dist/main.exe dist/SRT_Translator-1.0.exe  # 重命名可执行文件
+
     - name: Upload Executable as Artifact
       uses: actions/upload-artifact@v4
       with:
         name: SRT_Translator-Windows
-        path: dist/main.exe  # 根據生成的可執行檔案名稱調整
+        path: dist/SRT_Translator-1.0.exe  # 使用新的文件名
 
     - name: Load Environment Variables
       run: |
@@ -46,7 +50,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
-        files: dist/main.exe  # 上傳 Windows 可執行檔案
+        files: dist/SRT_Translator-1.0.exe  # 上传重命名后的可执行文件
         tag_name: v${{ github.sha }}  # 使用从 .env 文件读取的版本号
         name: Release ${{ github.sha }}  # 使用 SHA 作为发布名称
         draft: false
