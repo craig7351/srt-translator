@@ -42,6 +42,26 @@ jobs:
         name: SRT_Translator-macOS
         path: SRT_Translator-1.0.dmg
         
+    - name: Print GitHub Context Variables
+      run: |
+        echo "GitHub Context Variables:"
+        echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+        echo "GITHUB_RUN_ID: $GITHUB_RUN_ID"
+        echo "GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER"
+        echo "GITHUB_SHA: $GITHUB_SHA"
+        echo "GITHUB_REF: $GITHUB_REF"
+        echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+        echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
+        echo "GITHUB_ACTOR: $GITHUB_ACTOR"
+        echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+        echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+        echo "GITHUB_ENV: $GITHUB_ENV"
+    
+    - name: Print Environment Variables
+      run: |
+        echo "Environment Variables in $GITHUB_ENV:"
+        cat $GITHUB_ENV  # 打印 $GITHUB_ENV 的内容
+
     - name: Load Environment Variables
       run: |
         echo "VERSION=$(cat .env | grep VERSION | cut -d '=' -f2)" >> $GITHUB_ENV
