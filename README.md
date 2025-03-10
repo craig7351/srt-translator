@@ -32,6 +32,56 @@
 /Applications/SRT\ Translator.app/Contents/MacOS/srt_translator -f ./字幕資料夾
 ```
 
+## Windows 用戶使用方法
+
+### 使用方法
+
+1. 前往 [Releases](https://github.com/craig7351/srt-translator/releases) 頁面
+2. 下載最新版本的 `SRT_Translator-1.0.exe` 檔案
+3. 將下載的檔案放在您選擇的資料夾中
+4. 打開命令提示符（CMD）或 PowerShell
+5. 導航到包含 `SRT_Translator-1.0.exe` 的資料夾。例如：
+
+   ```bash
+   cd C:\path\to\your\directory
+   ```
+
+6. 執行可執行文件，使用以下命令格式：
+
+   ```bash
+   SRT_Translator-1.0.exe <input_file.srt> <output_file.srt>
+   ```
+
+   - `<input_file.srt>`: 要翻譯的輸入 SRT 檔案。
+   - `<output_file.srt>`: 翻譯後生成的輸出 SRT 檔案。
+
+### 翻譯整個資料夾
+
+如果您想要翻譯整個資料夾中的所有 SRT 檔案，可以使用 `-f` 參數。以下是具體步驟：
+
+1. 確保您的資料夾中只包含需要翻譯的 `.srt` 檔案。
+2. 使用以下命令格式執行：
+
+   ```bash
+   SRT_Translator-1.0.exe -f <folder_path>
+   ```
+
+   - `<folder_path>`: 包含要翻譯的 SRT 檔案的資料夾路徑。
+
+### 翻譯完成後的檔案位置
+
+翻譯完成後，所有生成的 SRT 檔案將自動保存在當前目錄的 `result` 資料夾中。
+
+### 示例
+
+```bash
+# 翻譯單個檔案
+SRT_Translator-1.0.exe example.srt translated_example.srt
+
+# 翻譯整個資料夾
+SRT_Translator-1.0.exe -f C:\path\to\your\subtitles_folder
+```
+
 ## Python 用戶使用方法
 
 如果您已安裝 Python，可以直接使用原始碼執行：
@@ -105,6 +155,56 @@ Open Terminal and run:
 
 # Translate all .srt files in a directory
 /Applications/SRT\ Translator.app/Contents/MacOS/srt_translator -f ./subtitles_folder
+```
+
+## Windows User Guide
+
+### Usage
+
+1. Go to the [Releases](https://github.com/craig7351/srt-translator/releases) page
+2. Download the latest `SRT_Translator-1.0.exe` file
+3. Place the downloaded file in your chosen directory
+4. Open Command Prompt (CMD) or PowerShell
+5. Navigate to the directory containing `SRT_Translator-1.0.exe`. For example:
+
+   ```bash
+   cd C:\path\to\your\directory
+   ```
+
+6. Run the executable using the following command format:
+
+   ```bash
+   SRT_Translator-1.0.exe <input_file.srt> <output_file.srt>
+   ```
+
+   - `<input_file.srt>`: The input SRT file to be translated.
+   - `<output_file.srt>`: The output SRT file generated after translation.
+
+### Translating an Entire Folder
+
+If you want to translate all SRT files in a folder, you can use the `-f` parameter. Here are the steps:
+
+1. Ensure that your folder contains only the `.srt` files you want to translate.
+2. Run the following command format:
+
+   ```bash
+   SRT_Translator-1.0.exe -f <folder_path>
+   ```
+
+   - `<folder_path>`: The path to the folder containing the SRT files.
+
+### Output Location
+
+After the translation is complete, all generated SRT files will be automatically saved in the `result` folder within the current directory.
+
+### Example
+
+```bash
+# Translate a single file
+SRT_Translator-1.0.exe example.srt translated_example.srt
+
+# Translate an entire folder
+SRT_Translator-1.0.exe -f C:\path\to\your\subtitles_folder
 ```
 
 ## Python User Guide
