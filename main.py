@@ -142,6 +142,25 @@ def translate_subtitle(input_file, output_file, service_name):
     subs.save(output_file, encoding='utf-8')
     print(f"\n翻譯完成！已保存至: {output_file}")
     
+    # 讀取替換規則
+    with open('replace_rules.json', 'r', encoding='utf-8') as f:
+        replace_rules = json.load(f)
+    
+    # 讀取翻譯後的文字並進行替換
+    with open(output_file, 'r', encoding='utf-8') as f:
+        text = f.read()
+    
+    # 應用所有替換規則
+    for rule in replace_rules['rules']:
+        from_text = rule['from']
+        to_text = rule['to']
+        count = text.count(from_text)
+        print(f"出現幾次'{from_text}': {count} 改為'{to_text}'")
+        text = text.replace(from_text, to_text)
+
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write(text)
+
     # 翻譯完成後刪除進度文件
     if os.path.exists(progress_file):
         os.remove(progress_file)
@@ -189,6 +208,8 @@ def main():
     else:
         print("無效的輸入，請提供有效的SRT文件或目錄路徑。")
         sys.exit(1)
+
+
 
 if __name__ == '__main__':
     main() 
